@@ -1,10 +1,14 @@
+// Import library utama dari Flutter
 import 'package:flutter/material.dart';
+// Import untuk menggunakan fitur Timer
 import 'dart:async';
 
+// Fungsi utama untuk menjalankan aplikasi
 void main() {
   runApp(const SushiApp());
 }
 
+// Widget utama aplikasi
 class SushiApp extends StatelessWidget {
   const SushiApp({super.key});
 
@@ -14,6 +18,7 @@ class SushiApp extends StatelessWidget {
       title: 'Aneska Sushi',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        // Gunakan skema warna berbasis seedColor
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
         useMaterial3: true,
         fontFamily: 'Poppins',
@@ -23,6 +28,7 @@ class SushiApp extends StatelessWidget {
   }
 }
 
+// Kelas model data untuk item sushi
 class SushiItem {
   final String name;
   final String description;
@@ -31,14 +37,17 @@ class SushiItem {
   int quantity;
   String status;
 
+  // Konstruktor utama dengan nilai default
   SushiItem(this.name, this.description, this.price, this.imageAsset,
       {this.quantity = 0, this.status = 'Sedang diproses'});
 
+  // Konstruktor cloning untuk membuat salinan item
   SushiItem.clone(SushiItem item)
       : this(item.name, item.description, item.price, item.imageAsset,
             quantity: item.quantity, status: item.status);
 }
 
+// Widget untuk splash screen (layar awal saat aplikasi dibuka)
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -46,10 +55,12 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
+// State dari splash screen
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    // Navigasi ke halaman menu setelah 2 detik
     Timer(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (_) => const MenuPage()));
@@ -75,6 +86,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
+// Widget halaman menu utama
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
 
@@ -82,7 +94,9 @@ class MenuPage extends StatefulWidget {
   State<MenuPage> createState() => _MenuPageState();
 }
 
+// State dari halaman menu
 class _MenuPageState extends State<MenuPage> {
+  // Daftar menu Sushi Roll
   final List<SushiItem> sushiRoll = [
     SushiItem('Beef Cheese Roll', 'Sushi daging sapi & keju.', 21000, 'assets/sushiroll/sushi1.png'),
     SushiItem('Crispy Tuna', 'Tuna pedas & salad.', 21000, 'assets/sushiroll/sushi2.png'),
@@ -90,6 +104,7 @@ class _MenuPageState extends State<MenuPage> {
     SushiItem('Garlic Salmon', 'Salmon & saus bawang.', 29000, 'assets/sushiroll/sushi4.png'),
   ];
 
+  // Daftar menu Sashimi
   final List<SushiItem> sashimi = [
     SushiItem('Salmon Sashimi', 'Irisan salmon segar.', 32000, 'assets/sashimi/sushi5.png'),
     SushiItem('Tuna Sashimi', 'Irisan tuna premium.', 30000, 'assets/sashimi/sushi6.png'),
@@ -97,6 +112,7 @@ class _MenuPageState extends State<MenuPage> {
     SushiItem('Octopus Sashimi', 'Sashimi gurita segar.', 33000, 'assets/sashimi/sushi8.png'),
   ];
 
+  // Daftar menu Nigiri
   final List<SushiItem> nigiri = [
     SushiItem('Salmon Nigiri', 'Nasi & irisan salmon.', 25000, 'assets/nigiri/sushi9.png'),
     SushiItem('Ebi Nigiri', 'Nasi & udang.', 24000, 'assets/nigiri/sushi10.png'),
@@ -104,19 +120,25 @@ class _MenuPageState extends State<MenuPage> {
     SushiItem('Unagi Nigiri', 'Nasi & belut bakar.', 28000, 'assets/nigiri/sushi12.png'),
   ];
 
+  // Kategori yang sedang dipilih
   String selectedCategory = 'Sushi Roll';
+
+  // Keranjang belanja
   final List<SushiItem> cart = [];
 
+  // Peta semua kategori dan itemnya
   final Map<String, List<SushiItem>> allCategories = {};
 
   @override
   void initState() {
+    // Inisialisasi daftar kategori
     allCategories['Sushi Roll'] = sushiRoll;
     allCategories['Sashimi'] = sashimi;
     allCategories['Nigiri'] = nigiri;
     super.initState();
   }
 
+  // Menambahkan item ke keranjang
   void addToCart(SushiItem item) {
     setState(() {
       var existing = cart.where((e) => e.name == item.name).toList();
@@ -128,6 +150,7 @@ class _MenuPageState extends State<MenuPage> {
     });
   }
 
+  // Menghapus item dari keranjang
   void removeFromCart(SushiItem item) {
     setState(() {
       var found = cart.firstWhere((e) => e.name == item.name);
@@ -138,6 +161,7 @@ class _MenuPageState extends State<MenuPage> {
     });
   }
 
+  // Widget untuk menampilkan tombol kategori
   Widget buildCategoryButtons() {
     return Wrap(
       alignment: WrapAlignment.center,
@@ -160,6 +184,7 @@ class _MenuPageState extends State<MenuPage> {
     );
   }
 
+  // Widget kartu menu untuk setiap item
   Widget buildMenuCard(SushiItem item) {
     final inCart = cart.any((e) => e.name == item.name);
     final quantity = cart.firstWhere((e) => e.name == item.name, orElse: () => SushiItem('', '', 0, '')).quantity;
@@ -217,11 +242,12 @@ class _MenuPageState extends State<MenuPage> {
     );
   }
 
+  // Membuka halaman keranjang
   void openCart() {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => CartPage(cartItems: cart)),
-    ).then((_) => setState(() {})); // refresh menu if needed
+    ).then((_) => setState(() {})); // refresh menu jika kembali
   }
 
   @override
@@ -268,7 +294,7 @@ class _MenuPageState extends State<MenuPage> {
   }
 }
 
-// ✅ Perbaikan utama ada di sini:
+// Widget halaman keranjang belanja
 class CartPage extends StatefulWidget {
   final List<SushiItem> cartItems;
 
@@ -278,7 +304,9 @@ class CartPage extends StatefulWidget {
   State<CartPage> createState() => _CartPageState();
 }
 
+// State halaman keranjang
 class _CartPageState extends State<CartPage> {
+  // Fungsi untuk menghapus item dari keranjang
   void removeItem(SushiItem item) {
     setState(() {
       item.quantity--;
@@ -342,6 +370,7 @@ class _CartPageState extends State<CartPage> {
   }
 }
 
+// Widget halaman checkout pesanan
 class CheckoutPage extends StatefulWidget {
   final List<SushiItem> orderItems;
   const CheckoutPage({super.key, required this.orderItems});
@@ -350,17 +379,21 @@ class CheckoutPage extends StatefulWidget {
   State<CheckoutPage> createState() => _CheckoutPageState();
 }
 
+// State halaman checkout
 class _CheckoutPageState extends State<CheckoutPage> {
   bool orderPlaced = false;
   String selectedPayment = 'Bayar di Tempat';
 
+  // Daftar metode pembayaran
   final List<String> paymentMethods = ['Bayar di Tempat', 'QRIS', 'Kartu Debit/Kredit'];
 
+  // Fungsi untuk memproses pesanan
   void placeOrder() {
     setState(() => orderPlaced = true);
     updateStatusLater();
   }
 
+  // Fungsi untuk memperbarui status pesanan setelah delay
   void updateStatusLater() async {
     await Future.delayed(const Duration(seconds: 5));
     setState(() {
