@@ -1,5 +1,7 @@
 # sushi_neska
 
+Aplikasi saya disini ya pak : https://github.com/aneskadysa/AneskaSushi/blob/main/APK/app-release.apk
+
 A new Flutter project.
 
 ## Getting Started
