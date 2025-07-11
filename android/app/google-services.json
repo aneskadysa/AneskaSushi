@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "531797664461",
+    "project_id": "aneskasushi",
+    "storage_bucket": "aneskasushi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:531797664461:android:332182cd96021af8c17f84",
+        "android_client_info": {
+          "package_name": "com.aneska.sushi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB8V2NCPWI2usVyHu73JURUcDhYo6lPPQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

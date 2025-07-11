@@ -1,4 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Izin untuk akses internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Jika kamu butuh akses jaringan saat device menggunakan Wi-Fi atau data -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:label="sushi_neska"
         android:name="${applicationName}"
